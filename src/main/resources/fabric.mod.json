@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "slime-amulet",
+  "version": "${version}",
+
+  "name": "Slime Amulet",
+  "description": "A simple vanilla-friendly solution to locate slime chunks.",
+  "authors": [],
+  "contact": {},
+
+  "license": "MIT",
+  "icon": "assets/rascal/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": ["click.rascal.slimeAmulet.client.SlimeAmuletDataGenerator"],
+    "client": ["click.rascal.slimeAmulet.client.SlimeAmuletClient"],
+    "main": ["click.rascal.slimeAmulet.SlimeAmulet"]
+  },
+
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-language-kotlin": ">=${kotlin_loader_version}",
+    "fabric": "*",
+    "minecraft": ">=1.20 <=1.20.1"
+  }
+}
