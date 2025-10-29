@@ -5,15 +5,13 @@ import click.rascal.slimeAmulet.logger
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.minecraft.data.server.recipe.RecipeJsonProvider
+import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder
 import net.minecraft.item.Items
 import net.minecraft.recipe.book.RecipeCategory
 
-import java.util.function.Consumer
-
 class RecipeProvider(output: FabricDataOutput): FabricRecipeProvider(output) {
-    override fun generate(exporter: Consumer<RecipeJsonProvider>) {
+    override fun generate(exporter: RecipeExporter) {
         logger.info("Generating recipes...")
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, SlimeAmuletItem.SLIME_AMULET, 1)
             .pattern(" i ")
