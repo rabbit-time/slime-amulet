@@ -1,10 +1,11 @@
 package click.rascal.slimeAmulet.item
 
 import click.rascal.slimeAmulet.SlimeAmulet
+import click.rascal.slimeAmulet.component.Components
 import click.rascal.slimeAmulet.logger
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.client.item.TooltipContext
+import net.minecraft.client.item.TooltipType
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
@@ -19,14 +20,15 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.random.ChunkRandom
-import net.minecraft.world.World
 
 class SlimeAmuletItem(settings: Settings) : Item(settings) {
     companion object {
-        val activeStateID: Identifier = Identifier(SlimeAmulet.NAMESPACE,"active")
         val activateSoundID: Identifier = Identifier("minecraft", "item.lodestone_compass.lock")
         val ID: Identifier = Identifier(SlimeAmulet.NAMESPACE, "slime_amulet")
-        val SLIME_AMULET: SlimeAmuletItem = register(ID, Settings().maxCount(1)).also {
+        val settings: Settings = Settings()
+            .maxCount(1)
+            .component(Components.ACTIVE_COMPONENT, false)
+        val SLIME_AMULET: SlimeAmuletItem = register(ID, settings).also {
             registerToGroup(it, ItemGroups.TOOLS, Items.RECOVERY_COMPASS)
         } as SlimeAmuletItem
         fun init() = Unit
@@ -51,7 +53,7 @@ class SlimeAmuletItem(settings: Settings) : Item(settings) {
     }
     override fun getName(stack: ItemStack): Text {
         return (super.getName(stack) as MutableText).styled {
-            val color = if (stack.nbt?.getBoolean("rascal:active") ?: false) {
+            val color = if (stack.get(Components.ACTIVE_COMPONENT)!!) {
                 Formatting.GREEN
             } else {
                 Formatting.DARK_GREEN
@@ -59,10 +61,15 @@ class SlimeAmuletItem(settings: Settings) : Item(settings) {
             it.withColor(color)
         }
     }
-    override fun appendTooltip(stack: ItemStack, world: World?, tooltip: MutableList<Text>, context: TooltipContext) {
+    override fun appendTooltip(
+        stack: ItemStack,
+        context: TooltipContext,
+        tooltip: MutableList<Text>,
+        type: TooltipType
+    ) {
         tooltip.add(Text.translatable("tooltip.rascal.slime_amulet.tooltip").styled {
             it.withColor(Formatting.GRAY)
         })
-        super.appendTooltip(stack, world, tooltip, context)
+        super.appendTooltip(stack, context, tooltip, type)
     }
 }

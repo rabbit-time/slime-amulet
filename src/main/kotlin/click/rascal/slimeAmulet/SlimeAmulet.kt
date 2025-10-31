@@ -1,5 +1,6 @@
 package click.rascal.slimeAmulet
 
+import click.rascal.slimeAmulet.component.Components
 import click.rascal.slimeAmulet.item.SlimeAmuletItem
 import click.rascal.slimeAmulet.networking.NetworkingHandler
 
@@ -17,6 +18,7 @@ class SlimeAmulet : ModInitializer {
         val logger: Logger = LoggerFactory.getLogger(MOD_ID)
     }
     override fun onInitialize() {
+        Components.init()
         SlimeAmuletItem.init()
         NetworkingHandler.init()
     }

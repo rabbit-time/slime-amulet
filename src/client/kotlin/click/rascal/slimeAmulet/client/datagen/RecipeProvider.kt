@@ -9,8 +9,14 @@ import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder
 import net.minecraft.item.Items
 import net.minecraft.recipe.book.RecipeCategory
+import net.minecraft.registry.RegistryWrapper
 
-class RecipeProvider(output: FabricDataOutput): FabricRecipeProvider(output) {
+import java.util.concurrent.CompletableFuture
+
+class RecipeProvider(
+    output: FabricDataOutput,
+    registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>
+): FabricRecipeProvider(output, registriesFuture) {
     override fun generate(exporter: RecipeExporter) {
         logger.info("Generating recipes...")
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, SlimeAmuletItem.SLIME_AMULET, 1)

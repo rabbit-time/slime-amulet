@@ -1,8 +1,8 @@
 package click.rascal.slimeAmulet.client.model
 
 import click.rascal.slimeAmulet.client.networking.ClientNetworkingHandler
+import click.rascal.slimeAmulet.component.Components
 import click.rascal.slimeAmulet.item.SlimeAmuletItem
-import click.rascal.slimeAmulet.item.SlimeAmuletItem.Companion.activeStateID
 import click.rascal.slimeAmulet.item.SlimeAmuletItem.Companion.activateSoundID
 import click.rascal.slimeAmulet.logger
 
@@ -11,7 +11,6 @@ import net.minecraft.client.item.ModelPredicateProviderRegistry
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
 import net.minecraft.sound.SoundEvent
 
 object SlimeAmuletPredicateProvider {
@@ -27,27 +26,20 @@ object SlimeAmuletPredicateProvider {
         }
         player.playSound(SoundEvent.of(activateSoundID), volume, pitch)
     }
-    private fun updateNBT(stack: ItemStack, activeState: Boolean) {
-        val tag: NbtCompound = stack.orCreateNbt
-        tag.putBoolean(activeStateID.toString(), activeState)
-    }
     private fun stateUpdate(stack: ItemStack, entity: LivingEntity?, activeState: Boolean) {
-        if (stack.nbt == null) {
-            updateNBT(stack, activeState)
-        }
-        val prevActiveState: Boolean = stack.nbt!!.getBoolean(activeStateID.toString())
+        val prevActiveState: Boolean = stack.get(Components.ACTIVE_COMPONENT)!!
         if (prevActiveState == activeState) {
             return
         }
         if (entity is PlayerEntity) {
             playSound(stack, entity, activeState)
         }
-        updateNBT(stack, activeState)
+        stack.set(Components.ACTIVE_COMPONENT, activeState)
     }
     fun register() {
         ModelPredicateProviderRegistry.register(
             SlimeAmuletItem.SLIME_AMULET,
-            activeStateID,
+            Components.activeComponentID,
             ClampedModelPredicateProvider { stack: ItemStack, _, entity: LivingEntity?, _ ->
                 if (entity == null) {
                     stateUpdate(stack, entity,false)
