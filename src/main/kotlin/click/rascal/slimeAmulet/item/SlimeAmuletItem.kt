@@ -5,12 +5,12 @@ import click.rascal.slimeAmulet.component.Components
 import click.rascal.slimeAmulet.logger
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.client.item.TooltipType
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -23,8 +23,8 @@ import net.minecraft.util.math.random.ChunkRandom
 
 class SlimeAmuletItem(settings: Settings) : Item(settings) {
     companion object {
-        val activateSoundID: Identifier = Identifier("minecraft", "item.lodestone_compass.lock")
-        val ID: Identifier = Identifier(SlimeAmulet.NAMESPACE, "slime_amulet")
+        val activateSoundID: Identifier = Identifier.of("minecraft", "item.lodestone_compass.lock")
+        val ID: Identifier = Identifier.of(SlimeAmulet.NAMESPACE, "slime_amulet")
         val settings: Settings = Settings()
             .maxCount(1)
             .component(Components.ACTIVE_COMPONENT, false)

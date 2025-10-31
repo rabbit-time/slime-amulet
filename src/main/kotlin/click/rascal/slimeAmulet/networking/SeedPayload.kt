@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier
 
 data class SeedPayload(val seed: Long) : CustomPayload {
     companion object {
-        val SEED_PACKET_ID: Identifier = Identifier("rascal", "seed")
+        val SEED_PACKET_ID: Identifier = Identifier.of("rascal", "seed")
         val ID: CustomPayload.Id<SeedPayload> = CustomPayload.Id(SEED_PACKET_ID)
         val CODEC: PacketCodec<RegistryByteBuf, SeedPayload> = PacketCodec.tuple(
             PacketCodecs.VAR_LONG,
