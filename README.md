@@ -1,5 +1,5 @@
 # Slime Amulet
-A simple mechanic which allows the player to locate slime chunks while staying grounded in their game, and keeps the vanilla-like feeling.
+A simple mechanic which allows the player to locate slime chunks while staying grounded in their game, and keeps the vanilla-like feeling. Also provides LabPBR textures for shaders.
 
 Built for Fabric and written in Kotlin. Requires Fabric API and Fabric Language Kotlin.
 
